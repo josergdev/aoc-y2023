@@ -5,7 +5,8 @@ module Day02 where
 import Data.List.Split (splitOn)
 import Data.Maybe (catMaybes, mapMaybe)
 import Utils (readLines, matchRegex, matchRegexToInt)
-import Data.List ( find )
+import Data.List ( find, maximumBy )
+import Data.Function
 
 d02p01 :: IO ()
 d02p01 = do
@@ -56,13 +57,31 @@ isPossibleSet s = isP Red && isP Green && isP Blue
 isPossibleGame :: Game -> Bool
 isPossibleGame = all isPossibleSet . sets
 
+collect1 :: [Game] -> Int
+collect1 = sum . map gameId . filter isPossibleGame
+
 exec1 :: [String] -> Int
-exec1 = sum . map gameId . filter isPossibleGame . mapMaybe parseGame
+exec1 = collect1 . mapMaybe parseGame
 
 d02p02 :: IO ()
 d02p02 = do
   contents <- readLines "input/d02.txt"
   print "Day 02 - Part 2:"
-  print $ exec2
+  print $ exec2 contents
 
-exec2 = "nothing"
+minimumSet :: [[(Int, Color)]] -> [(Int, Color)]
+minimumSet ss = [minColor Red, minColor Green, minColor Blue]
+  where
+    filterColor c = filter ((==c) . snd) (concat ss)
+    minOrZero c [] = (0,c)
+    minOrZero _ ics = maximumBy (compare `on` fst) ics
+    minColor c = minOrZero c (filterColor c)
+
+powSet :: Game -> Int
+powSet = product . map fst . minimumSet . sets
+
+collect2 :: [Game] -> Int
+collect2 = sum . map powSet
+
+exec2 :: [String] -> Int
+exec2 = collect2 . mapMaybe parseGame
