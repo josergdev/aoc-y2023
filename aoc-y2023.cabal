@@ -30,6 +30,7 @@ library
       Day03
       Day04
       Day05
+      Day06
       Utils
   other-modules:
       Paths_aoc_y2023
