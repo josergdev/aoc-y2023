@@ -1,8 +1,11 @@
-module Utils(readLines, multiMatchRegex, matchRegex, matchRegexToInt, section) where
+module Utils(printList, readLines, multiMatchRegex, matchRegex, matchRegexToInt, section) where
 
 import Text.RegexPR (multiMatchRegexPR, matchRegexPR)
 import Data.Maybe (mapMaybe, listToMaybe)
 import Text.Read (readMaybe)
+
+printList :: (Foldable t, Show a) => IO (t a) -> IO ()
+printList i = mapM_ print =<< i
 
 readLines :: FilePath -> IO [String]
 readLines = fmap lines . readFile
