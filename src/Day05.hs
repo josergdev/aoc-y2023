@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wno-missing-export-lists #-}
 
-module Day05 where
+module Day05(d05p01, d05p02) where
 
 import Data.List (sortOn)
 import Data.List.Split (chunksOf, splitWhen)

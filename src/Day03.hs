@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wno-missing-export-lists #-}
 
-module Day03 where
+module Day03 (d03p01, d03p02) where
 
 import Utils (readLines)
 import Data.Char (isDigit)

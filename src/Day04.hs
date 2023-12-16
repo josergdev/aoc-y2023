@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -Wno-missing-export-lists #-}
 {-# OPTIONS_GHC -Wno-unused-matches #-}
 
-module Day04 where
+module Day04 (d04p01, d04p02) where
 
 import Utils (readLines, matchRegexToInt, matchRegex)
 import Data.Maybe (mapMaybe)
