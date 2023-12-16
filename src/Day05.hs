@@ -9,16 +9,32 @@ import qualified Data.Range as R
 import Text.Read (readMaybe)
 import Utils (readLines)
 
-data Range = Range {des :: Int, src :: Int, len :: Int} deriving (Show, Eq, Ord)
+data Range = Range
+  { des :: Int,
+    src :: Int,
+    len :: Int
+  }
+  deriving (Show, Eq, Ord)
 
-data FiniteRange = FiniteRange {ini :: Int, end :: Int} deriving (Eq, Show, Ord)
+data FiniteRange = FiniteRange
+  { ini :: Int,
+    end :: Int
+  }
+  deriving (Eq, Show, Ord)
 
-data FiniteRangeMapping = FiniteRangeMapping {fDes :: FiniteRange, fSrc :: FiniteRange} deriving (Eq, Show, Ord)
+data FiniteRangeMapping = FiniteRangeMapping
+  { fDes :: FiniteRange,
+    fSrc :: FiniteRange
+  }
+  deriving (Eq, Show, Ord)
 
-newtype FiniteRangeMap = FiniteRangeMap {fRanges :: [FiniteRangeMapping]} deriving (Eq, Show, Ord)
+newtype FiniteRangeMap = FiniteRangeMap
+  { fRanges :: [FiniteRangeMapping]
+  }
+  deriving (Eq, Show, Ord)
 
 singleFiniteRange :: Int -> FiniteRange
-singleFiniteRange n = FiniteRange {ini=n, end=n}
+singleFiniteRange n = FiniteRange {ini = n, end = n}
 
 toRange :: [Int] -> Range
 toRange ls = Range (head ls) (ls !! 1) (ls !! 2)
@@ -36,7 +52,7 @@ parseSeeds :: [String] -> [Int]
 parseSeeds = concatMap parseNumbers . listToMaybe
 
 parseSeedFRanges1 :: [String] -> [FiniteRange]
-parseSeedFRanges1  = map singleFiniteRange . parseSeeds 
+parseSeedFRanges1 = map singleFiniteRange . parseSeeds
 
 parseFMappings :: [String] -> [FiniteRangeMap]
 parseFMappings = map (FiniteRangeMap . (map (fromRange . toRange . parseNumbers) . drop 1)) . splitWhen (== "") . drop 2
@@ -95,8 +111,8 @@ fSrcs = mergeFRanges . map fSrc . fRanges
 mapWithFiniteRangeMap :: [FiniteRange] -> FiniteRangeMap -> [FiniteRange]
 mapWithFiniteRangeMap frs frm = mergeFRanges $ concatMap (mapWithFiniteRangeMapping frs) (fRanges frm) ++ frsDiff frs (fSrcs frm)
 
-mapWithFiniteRangeMaps ::  [FiniteRange] -> [FiniteRangeMap] -> [FiniteRange]
-mapWithFiniteRangeMaps = foldl mapWithFiniteRangeMap  
+mapWithFiniteRangeMaps :: [FiniteRange] -> [FiniteRangeMap] -> [FiniteRange]
+mapWithFiniteRangeMaps = foldl mapWithFiniteRangeMap
 
 exec1 :: [String] -> Int
 exec1 ss = frsHead $ mapWithFiniteRangeMaps (parseSeedFRanges1 ss) (parseFMappings ss)
