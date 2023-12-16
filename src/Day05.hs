@@ -38,7 +38,6 @@ parseSeeds = concatMap parseNumbers . listToMaybe
 parseSeedFRanges1 :: [String] -> [FiniteRange]
 parseSeedFRanges1  = map singleFiniteRange . parseSeeds 
 
-
 parseFMappings :: [String] -> [FiniteRangeMap]
 parseFMappings = map (FiniteRangeMap . (map (fromRange . toRange . parseNumbers) . drop 1)) . splitWhen (== "") . drop 2
 

@@ -19,6 +19,5 @@ matchRegex p l = fmap snd ((listToMaybe . snd) =<< matchRegexPR p l)
 matchRegexToInt :: String -> String -> Maybe Int
 matchRegexToInt p l = readMaybe =<< matchRegex p l
 
-
 section :: b -> a -> (a, b)
 section = flip (,)
