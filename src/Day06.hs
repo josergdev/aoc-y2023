@@ -1,7 +1,8 @@
 {-# OPTIONS_GHC -Wno-missing-export-lists #-}
 {-# OPTIONS_GHC -Wno-unused-matches #-}
+{-# OPTIONS_GHC -Wno-unused-top-binds #-}
 
-module Day06 where
+module Day06(d06p01, d06p02) where
 
 import Control.Monad (ap)
 import Data.Maybe (mapMaybe, maybeToList)
